@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/yandex-ui-themer/static/css/main.e01aa188.chunk.css",
-    "main.js": "/yandex-ui-themer/static/js/main.ebaa7f54.chunk.js",
-    "main.js.map": "/yandex-ui-themer/static/js/main.ebaa7f54.chunk.js.map",
+    "main.js": "/yandex-ui-themer/static/js/main.a963be15.chunk.js",
+    "main.js.map": "/yandex-ui-themer/static/js/main.a963be15.chunk.js.map",
     "runtime-main.js": "/yandex-ui-themer/static/js/runtime-main.6f514940.js",
     "runtime-main.js.map": "/yandex-ui-themer/static/js/runtime-main.6f514940.js.map",
-    "static/css/2.baa12c91.chunk.css": "/yandex-ui-themer/static/css/2.baa12c91.chunk.css",
-    "static/js/2.df0b4227.chunk.js": "/yandex-ui-themer/static/js/2.df0b4227.chunk.js",
-    "static/js/2.df0b4227.chunk.js.map": "/yandex-ui-themer/static/js/2.df0b4227.chunk.js.map",
+    "static/css/2.da76980e.chunk.css": "/yandex-ui-themer/static/css/2.da76980e.chunk.css",
+    "static/js/2.695c489c.chunk.js": "/yandex-ui-themer/static/js/2.695c489c.chunk.js",
+    "static/js/2.695c489c.chunk.js.map": "/yandex-ui-themer/static/js/2.695c489c.chunk.js.map",
     "index.html": "/yandex-ui-themer/index.html",
-    "precache-manifest.6acdf78310c4d64b57515e12a078209e.js": "/yandex-ui-themer/precache-manifest.6acdf78310c4d64b57515e12a078209e.js",
+    "precache-manifest.42cbb839adfb5ca02c83f33408c6a1ff.js": "/yandex-ui-themer/precache-manifest.42cbb839adfb5ca02c83f33408c6a1ff.js",
     "service-worker.js": "/yandex-ui-themer/service-worker.js",
-    "static/css/2.baa12c91.chunk.css.map": "/yandex-ui-themer/static/css/2.baa12c91.chunk.css.map",
+    "static/css/2.da76980e.chunk.css.map": "/yandex-ui-themer/static/css/2.da76980e.chunk.css.map",
     "static/css/main.e01aa188.chunk.css.map": "/yandex-ui-themer/static/css/main.e01aa188.chunk.css.map",
-    "static/js/2.df0b4227.chunk.js.LICENSE.txt": "/yandex-ui-themer/static/js/2.df0b4227.chunk.js.LICENSE.txt",
+    "static/js/2.695c489c.chunk.js.LICENSE.txt": "/yandex-ui-themer/static/js/2.695c489c.chunk.js.LICENSE.txt",
     "static/media/Icon_type_arrow.css": "/yandex-ui-themer/static/media/arrow-b.a366267e.svg",
     "static/media/UserPic-Camera.css": "/yandex-ui-themer/static/media/camera.cb5d19c8.svg",
     "static/media/Icon_type_close.css": "/yandex-ui-themer/static/media/close.200d6792.svg",
@@ -33,9 +33,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.6f514940.js",
-    "static/css/2.baa12c91.chunk.css",
-    "static/js/2.df0b4227.chunk.js",
+    "static/css/2.da76980e.chunk.css",
+    "static/js/2.695c489c.chunk.js",
     "static/css/main.e01aa188.chunk.css",
-    "static/js/main.ebaa7f54.chunk.js"
+    "static/js/main.a963be15.chunk.js"
   ]
 }
