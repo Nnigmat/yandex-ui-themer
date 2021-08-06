@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/yandex-ui-themer/static/css/main.d6eb3465.chunk.css",
-    "main.js": "/yandex-ui-themer/static/js/main.9f7200e6.chunk.js",
-    "main.js.map": "/yandex-ui-themer/static/js/main.9f7200e6.chunk.js.map",
+    "main.css": "/yandex-ui-themer/static/css/main.0f1a54e5.chunk.css",
+    "main.js": "/yandex-ui-themer/static/js/main.77539ae6.chunk.js",
+    "main.js.map": "/yandex-ui-themer/static/js/main.77539ae6.chunk.js.map",
     "runtime-main.js": "/yandex-ui-themer/static/js/runtime-main.6f514940.js",
     "runtime-main.js.map": "/yandex-ui-themer/static/js/runtime-main.6f514940.js.map",
     "static/css/2.3f8c249a.chunk.css": "/yandex-ui-themer/static/css/2.3f8c249a.chunk.css",
-    "static/js/2.9c34c55f.chunk.js": "/yandex-ui-themer/static/js/2.9c34c55f.chunk.js",
-    "static/js/2.9c34c55f.chunk.js.map": "/yandex-ui-themer/static/js/2.9c34c55f.chunk.js.map",
+    "static/js/2.f0bfd6c3.chunk.js": "/yandex-ui-themer/static/js/2.f0bfd6c3.chunk.js",
+    "static/js/2.f0bfd6c3.chunk.js.map": "/yandex-ui-themer/static/js/2.f0bfd6c3.chunk.js.map",
     "index.html": "/yandex-ui-themer/index.html",
-    "precache-manifest.8067b00ad36b472c15658d7f44aa2a45.js": "/yandex-ui-themer/precache-manifest.8067b00ad36b472c15658d7f44aa2a45.js",
+    "precache-manifest.1ada6a3d673a28671b9e75a216d911e0.js": "/yandex-ui-themer/precache-manifest.1ada6a3d673a28671b9e75a216d911e0.js",
     "service-worker.js": "/yandex-ui-themer/service-worker.js",
     "static/css/2.3f8c249a.chunk.css.map": "/yandex-ui-themer/static/css/2.3f8c249a.chunk.css.map",
-    "static/css/main.d6eb3465.chunk.css.map": "/yandex-ui-themer/static/css/main.d6eb3465.chunk.css.map",
-    "static/js/2.9c34c55f.chunk.js.LICENSE.txt": "/yandex-ui-themer/static/js/2.9c34c55f.chunk.js.LICENSE.txt",
+    "static/css/main.0f1a54e5.chunk.css.map": "/yandex-ui-themer/static/css/main.0f1a54e5.chunk.css.map",
+    "static/js/2.f0bfd6c3.chunk.js.LICENSE.txt": "/yandex-ui-themer/static/js/2.f0bfd6c3.chunk.js.LICENSE.txt",
     "static/media/Icon_type_arrow.css": "/yandex-ui-themer/static/media/arrow-b.a366267e.svg",
     "static/media/UserPic-Camera.css": "/yandex-ui-themer/static/media/camera.cb5d19c8.svg",
     "static/media/Icon_type_close.css": "/yandex-ui-themer/static/media/close.200d6792.svg",
@@ -35,8 +35,8 @@
   "entrypoints": [
     "static/js/runtime-main.6f514940.js",
     "static/css/2.3f8c249a.chunk.css",
-    "static/js/2.9c34c55f.chunk.js",
-    "static/css/main.d6eb3465.chunk.css",
-    "static/js/main.9f7200e6.chunk.js"
+    "static/js/2.f0bfd6c3.chunk.js",
+    "static/css/main.0f1a54e5.chunk.css",
+    "static/js/main.77539ae6.chunk.js"
   ]
 }
