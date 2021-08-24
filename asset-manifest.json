@@ -1,21 +1,20 @@
 {
   "files": {
-    "main.css": "/yandex-ui-themer/static/css/main.f4b0b044.chunk.css",
-    "main.js": "/yandex-ui-themer/static/js/main.93cfe7b1.chunk.js",
-    "main.js.map": "/yandex-ui-themer/static/js/main.93cfe7b1.chunk.js.map",
+    "main.css": "/yandex-ui-themer/static/css/main.9cdc8789.chunk.css",
+    "main.js": "/yandex-ui-themer/static/js/main.3438f961.chunk.js",
+    "main.js.map": "/yandex-ui-themer/static/js/main.3438f961.chunk.js.map",
     "runtime-main.js": "/yandex-ui-themer/static/js/runtime-main.6f514940.js",
     "runtime-main.js.map": "/yandex-ui-themer/static/js/runtime-main.6f514940.js.map",
-    "static/css/2.96deb35d.chunk.css": "/yandex-ui-themer/static/css/2.96deb35d.chunk.css",
-    "static/js/2.38be6ffc.chunk.js": "/yandex-ui-themer/static/js/2.38be6ffc.chunk.js",
-    "static/js/2.38be6ffc.chunk.js.map": "/yandex-ui-themer/static/js/2.38be6ffc.chunk.js.map",
+    "static/css/2.97bb4435.chunk.css": "/yandex-ui-themer/static/css/2.97bb4435.chunk.css",
+    "static/js/2.7236248c.chunk.js": "/yandex-ui-themer/static/js/2.7236248c.chunk.js",
+    "static/js/2.7236248c.chunk.js.map": "/yandex-ui-themer/static/js/2.7236248c.chunk.js.map",
     "index.html": "/yandex-ui-themer/index.html",
-    "precache-manifest.d9d5cbe2a5ef33789821dd3f0c654268.js": "/yandex-ui-themer/precache-manifest.d9d5cbe2a5ef33789821dd3f0c654268.js",
+    "precache-manifest.751f678978eaa98c9499c28777ba1cb9.js": "/yandex-ui-themer/precache-manifest.751f678978eaa98c9499c28777ba1cb9.js",
     "service-worker.js": "/yandex-ui-themer/service-worker.js",
-    "static/css/2.96deb35d.chunk.css.map": "/yandex-ui-themer/static/css/2.96deb35d.chunk.css.map",
-    "static/css/main.f4b0b044.chunk.css.map": "/yandex-ui-themer/static/css/main.f4b0b044.chunk.css.map",
-    "static/js/2.38be6ffc.chunk.js.LICENSE.txt": "/yandex-ui-themer/static/js/2.38be6ffc.chunk.js.LICENSE.txt",
+    "static/css/2.97bb4435.chunk.css.map": "/yandex-ui-themer/static/css/2.97bb4435.chunk.css.map",
+    "static/css/main.9cdc8789.chunk.css.map": "/yandex-ui-themer/static/css/main.9cdc8789.chunk.css.map",
+    "static/js/2.7236248c.chunk.js.LICENSE.txt": "/yandex-ui-themer/static/js/2.7236248c.chunk.js.LICENSE.txt",
     "static/media/Icon_type_arrow.css": "/yandex-ui-themer/static/media/arrow-b.a366267e.svg",
-    "static/media/UserPic-Camera.css": "/yandex-ui-themer/static/media/camera.cb5d19c8.svg",
     "static/media/Icon_type_close.css": "/yandex-ui-themer/static/media/close.200d6792.svg",
     "static/media/Icon_type_cross.css": "/yandex-ui-themer/static/media/cross-s.600eb3af.svg",
     "static/media/Icon_type_cross-websearch.css": "/yandex-ui-themer/static/media/cross-websearch.02212f1a.svg",
@@ -24,19 +23,17 @@
     "static/media/index.css": "/yandex-ui-themer/static/media/inter-vietnamese-400-normal.7107d73e.woff2",
     "static/media/Mirror-Icon.css": "/yandex-ui-themer/static/media/mirror.4fa5e871.svg",
     "static/media/News-Icon.css": "/yandex-ui-themer/static/media/news.44a2d022.svg",
-    "static/media/UserPic.css": "/yandex-ui-themer/static/media/plus-circle.30da614f.svg",
-    "static/media/Attach-Reset.css": "/yandex-ui-themer/static/media/reset.ad61d919.svg",
     "static/media/Sport-Icon.css": "/yandex-ui-themer/static/media/sport.d7a790f7.svg",
     "static/media/Checkbox-Tick.css": "/yandex-ui-themer/static/media/tick-s.39998d58.svg",
     "static/media/Menu_theme_normal.css": "/yandex-ui-themer/static/media/tip.f4b42475.svg",
     "static/media/Weather-Icon.css": "/yandex-ui-themer/static/media/weather.179091c2.svg",
-    "static/media/Header-Logo.css": "/yandex-ui-themer/static/media/yandex-ru.1111f693.svg"
+    "static/media/Header-Logo.css": "/yandex-ui-themer/static/media/yandex-ru.63aba137.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.6f514940.js",
-    "static/css/2.96deb35d.chunk.css",
-    "static/js/2.38be6ffc.chunk.js",
-    "static/css/main.f4b0b044.chunk.css",
-    "static/js/main.93cfe7b1.chunk.js"
+    "static/css/2.97bb4435.chunk.css",
+    "static/js/2.7236248c.chunk.js",
+    "static/css/main.9cdc8789.chunk.css",
+    "static/js/main.3438f961.chunk.js"
   ]
 }
