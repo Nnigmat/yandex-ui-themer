@@ -3,7 +3,7 @@ import { useStore } from 'effector-react'
 
 import { Modal } from '../../../lib/lego/Modal'
 import { $isCombine } from '../../../model/combine'
-import { variablesReset, $hasTokens } from '../../../model/designTokens'
+import { tokensReset, $hasChanges } from '../../../model/tokens'
 
 import { TrashIcon } from '../../../icons'
 import { Button, Icon } from 'react-figma-components'
@@ -16,7 +16,7 @@ export const Controls: FC<ControlsProps> = (props) => {
   const scopeRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const isCombine = useStore($isCombine)
-  const changesPresent = useStore($hasTokens)
+  const changesPresent = useStore($hasChanges)
 
   const handleClick = () => {
     setVisible(true)
@@ -27,7 +27,7 @@ export const Controls: FC<ControlsProps> = (props) => {
   }
 
   const handleSubmit = () => {
-    variablesReset()
+    tokensReset()
     setVisible(false)
   }
 

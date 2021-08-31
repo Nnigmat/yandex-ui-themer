@@ -1,8 +1,8 @@
+import { tokenBatchUpdate } from './tokens'
 import { attach, createEffect, createEvent, forward } from 'effector'
 import { toast } from 'react-toastify'
 
 import { $theme } from './themes'
-import { variablesChangeBatch } from './designTokens'
 import { downloadTheme } from '../api/downloadTheme'
 import { $yamlText } from './yaml'
 import { ThemeType } from '../types'
@@ -39,7 +39,7 @@ export const tokensUpdate = createEvent<string>()
 $tokensText.on(tokensUpdate, (_, payload) => payload)
 
 uploadRawTokensFx.doneData.watch((tokens) => {
-  variablesChangeBatch(tokens)
+  tokenBatchUpdate(tokens)
   toast.success('Tokens successfully uploaded')
 })
 

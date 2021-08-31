@@ -2,21 +2,20 @@ import { createStore, createEvent, combine } from 'effector'
 
 import groupBy from 'lodash.groupby'
 
-import { toHEXA } from '../../utils/color'
-import { extractParams } from '../../utils/extractParams'
-import { getType } from '../../utils/tokenType'
-import { getComponentMetaByName } from '../../utils/getComponentByName'
-import { $componentTokens, $globalTokens } from '../../model/tokens'
+import { toHEXA } from '../utils/color'
+import { extractParams } from '../utils/extractParams'
+import { getType } from '../utils/tokenType'
+import { $componentTokens, $globalTokens } from './tokens'
 
 export type TokenBase = {
   label: string
+  name: string
   groups: string[]
   path: string[]
   description: string
   defaultValue: string
   rawValue: string
   changed: boolean
-  name: string
 }
 
 export type TokenType = TokenBase &
@@ -44,10 +43,6 @@ export const currentPropsChange = createEvent<{
   name: string
   value: unknown
 }>()
-export const currentCombinedPropsChange = createEvent<{
-  name: string
-  value: unknown
-}>()
 
 export interface Prop {
   name: string
@@ -65,17 +60,15 @@ interface IComponent {
 }
 
 interface ComponentState {
-  allProps: Prop[]
+  allProps: Record<string, Prop>
   currentProps: Record<string, unknown>
-  currentCombinedProps: Record<string, unknown>
 }
 
 // Current selected component to be shown
 export const $component = createStore<string>('overview')
 export const $componentProps = createStore<ComponentState>({
-  allProps: [],
+  allProps: {},
   currentProps: {},
-  currentCombinedProps: {},
 })
 
 // Current selected token to be edited
@@ -88,7 +81,7 @@ const getTokenGroups = (name: string) => {
   return parts.map((_, index) => parts.slice(0, index + 1).join('-')).reverse()
 }
 
-// Tokens of the component
+// Tokens of the selected component
 export const $tokens = combine(
   {
     globals: $globalTokens,
@@ -96,17 +89,18 @@ export const $tokens = combine(
     selectedComponent: $component,
   },
   ({ globals, components, selectedComponent }) => {
+    console.log(globals)
     const tokens = selectedComponent === 'overview' ? globals : components[selectedComponent]
 
     const preparedTokens = Object.entries(tokens).map<TokenType>(([tokenName, token]) => {
+      // Current type of the token (can become link)
       const {
-        type: baseType,
         original: { value: rawValue },
-        value,
+        type: baseType,
         changed,
+        value,
       } = token
-
-      const type = getType(rawValue || value)
+      const type = getType(rawValue)
 
       let resultToken: any
       switch (type) {
@@ -135,8 +129,8 @@ export const $tokens = combine(
       return {
         ...token,
         ...resultToken,
-        label: tokenName,
         name: tokenName,
+        label: tokenName,
         groups: getTokenGroups(tokenName),
         type,
         defaultValue: token.value,
@@ -158,41 +152,3 @@ export const $tokens = combine(
     })
   },
 )
-
-// Current tab to show
-export const $activeTab = createStore<string>('')
-
-$component.on(componentChange, (_, component) => component)
-$componentProps.on(componentChange, (_, component) => {
-  // @ts-expect-error
-  const currentComponent = getComponentMetaByName(component)
-  console.log(currentComponent)
-  return {
-    allProps: currentComponent.argTypes,
-    currentProps: currentComponent.args,
-    currentCombinedProps: {},
-  }
-})
-$componentProps.on(
-  currentPropsChange,
-  ({ allProps, currentProps, currentCombinedProps }, newProp) => {
-    const newState = { ...currentProps }
-    newState[newProp.name] = newProp.value
-
-    return { allProps, currentProps: newState, currentCombinedProps }
-  },
-)
-
-$componentProps.on(
-  currentCombinedPropsChange,
-  ({ allProps, currentProps, currentCombinedProps }, newProp) => {
-    const newState = { ...currentCombinedProps }
-    newState[newProp.name] = newProp.value
-
-    return { allProps, currentCombinedProps: newState, currentProps }
-  },
-)
-
-$token.on(tokenChange, (_, token) => token).reset(tokenReset)
-
-$activeTab.on(activeTabChange, (_, activeTab) => activeTab)

@@ -6,52 +6,42 @@ import { ParamsType } from '../types'
 import { PARAM_DOT_RE } from '../utils/constants'
 import { extractParams } from '../utils/extractParams'
 import { toDeepToken } from '../utils/toDeepToken'
-import { $invertedTokenMappings } from './mappings'
-import { $theme } from './themes'
-import { $dotSepDesignTokens } from './designTokens'
+import { $changes, $allTokensObject } from './tokens'
 
 export const $yamlText = combine(
   {
-    designTokens: $dotSepDesignTokens,
-    mappings: $invertedTokenMappings,
-    theme: $theme,
+    changes: $changes,
+    tokens: $allTokensObject,
   },
-  ({ designTokens, mappings, theme: { allTokens } }) => {
-    if (Object.keys(designTokens).length === 0) {
+  ({ changes, tokens }) => {
+    if (Object.keys(changes).length === 0) {
       return ''
     }
 
-    // Make object for yaml from designTokens
-    const yml = Object.values(designTokens).reduce((acc, { path, value, rawValue }) => {
-      if (rawValue) {
-        acc.push(toDeepToken(path, { value: rawValue }))
-      } else {
-        acc.push(toDeepToken(path, { value }))
-      }
+    // Make object for yaml from changes
+    const yml = Object.values(changes).reduce(
+      (acc, { path, value }) => [...acc, toDeepToken(path, value)],
+      [] as any,
+    )
 
-      return acc
-    }, [] as any)
-
-    // Get all params from designTokens values
-    const params = Object.values(designTokens).reduce<ParamsType[]>(
-      (acc, { value, rawValue }) => [
-        ...acc,
-        ...(extractParams(rawValue || value, PARAM_DOT_RE) || []),
-      ],
+    // Get all params from changes values
+    const params = Object.values(changes).reduce<ParamsType[]>(
+      (acc, { value }) => [...acc, ...(extractParams(value, PARAM_DOT_RE) || [])],
       [],
     )
 
     // If param is in the theme and it was not redefined then add theme's value to the yaml
     params
-      .map(({ token }) => mappings[token] || token)
-      .filter((token) => !(token in designTokens))
+      .map(({ token }) => token)
+      .filter((token) => !(token in changes))
       .forEach((token) => {
-        if (allTokens[token]) {
-          const { path, value } = allTokens[token]
+        if (tokens[token]) {
+          const { path, value } = tokens[token]
           yml.push(toDeepToken(path, { value }))
         }
       })
 
+    console.log(yml)
     const deepmergedYml = deepmerge.all(yml)
     return YAML.stringify(deepmergedYml)
   },

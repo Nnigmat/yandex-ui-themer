@@ -52,20 +52,18 @@ export type TokensType = {
 export type MappingsType = Record<string, string>
 
 export type ThemeType = {
-  tokens: TokensType
+  // TODO: Поменять на тип из @yandex/themekit-core
+  tokens: any
   preset: Theme
   mappings: MappingsType
-  allTokens: TokenRecordType
+  defaultValues: Record<string, string>
   name?: string
 }
 
 export type VariablesType = {
   name: string
-  path: string[]
   value: string
-  changed: boolean
-  rawValue?: string
-  type: 'color' | 'link' | 'text'
+  path: string[]
 }
 
 export type TokensHashType = string

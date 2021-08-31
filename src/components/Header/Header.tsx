@@ -4,7 +4,7 @@ import { useStore } from 'effector-react'
 
 import { TabsMenu } from '../../lib/lego/TabsMenu'
 import { Controls } from './Controls'
-import { $isVariablesChanged } from '../../model/designTokens'
+import { $tokensChangedSinceLastView } from '../../model/tokens'
 
 import './Header.css'
 
@@ -18,7 +18,7 @@ export type HeaderProps = {
 export const cnHeader = cn('Header')
 
 export const Header: FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
-  const showChangesNotification = useStore($isVariablesChanged)
+  const showChangesNotification = useStore($tokensChangedSinceLastView)
 
   return (
     <div className={cnHeader()}>

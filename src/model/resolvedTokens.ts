@@ -1,7 +1,7 @@
 import { createStore, createEvent, createEffect, forward, attach } from 'effector'
 
 import { downloadTheme } from '../api/downloadTheme'
-import { variablesReset } from './designTokens'
+import { tokensReset } from './tokens'
 import { $yamlText } from './yaml'
 import { DesignTokensType, VariablesType, MappingsType } from '../types'
 import { $theme } from './themes'
@@ -14,7 +14,7 @@ $resolvedTokens
   .on(resolvedTokensUpdate, (_, tokens) =>
     tokens.reduce((acc, token) => ({ ...acc, [token.name]: token }), {}),
   )
-  .reset(variablesReset)
+  .reset(tokensReset)
 
 export const resolveTokensFx = createEffect(
   async ({ content, mappings }: { content: string; mappings: MappingsType }) => {

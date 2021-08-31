@@ -1,38 +1,25 @@
 import { ListDesignTokensType, MappingsType } from '../types'
-import { build } from '@yandex/themekit/lib/core/build'
-import { parseContent } from '@yandex/themekit/lib/core/parseContent'
+import { compile, parseYaml } from '@yandex/themekit-core'
 
 import { getType } from '../utils/tokenType'
 
-export const themeboxConfig = {
-  output: {
-    css: {
-      transforms: ['name/cti/kebab', 'json/extended/mapper'],
-      buildPath: './themes',
-      files: [
-        {
-          destination: 'tokens.json',
-          format: 'json/extended',
-        },
-      ],
-      actions: ['process-color'],
+export const downloadTheme = async (content: string, mappings: MappingsType) => {
+  const res = compile({
+    tokens: [parseYaml(content)],
+    output: {
+      json: {
+        transforms: ['name/param-case', 'value/color-function'],
+        files: [
+          {
+            destination: 'root.json',
+            format: 'json/flat',
+          },
+        ],
+      },
     },
-  },
-}
+  })
 
-export const downloadTheme = async (content: any, mappings: MappingsType) => {
-  const res = await build([
-    {
-      mapper: mappings,
-      whitepaper: {},
-      entry: 'browser',
-      platform: 'desktop',
-      properties: parseContent(content, 'yaml') as object,
-      ...themeboxConfig,
-    },
-  ])
-
-  const properties = res['css'].dictionary.allProperties
+  const properties = JSON.parse(res.json[0].content)
 
   const tokens: ListDesignTokensType = Object.entries(properties).map(([_, item]: any) => ({
     path: item.path,

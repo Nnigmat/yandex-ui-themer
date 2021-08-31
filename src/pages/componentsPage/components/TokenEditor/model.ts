@@ -1,5 +1,5 @@
 import { combine } from 'effector'
-import { $theme } from '../../../../model/themes'
+import { $allTokensObject } from '../../../../model/tokens'
 import { $token, tokenReset } from '../../model'
 
 export type SelectedTokenType = {}
@@ -7,9 +7,9 @@ export type SelectedTokenType = {}
 export const closeEditor = tokenReset
 
 export const $selectedToken = combine(
-  { token: $token, theme: $theme },
-  ({ token, theme: { allTokens } }) => ({
+  { token: $token, tokens: $allTokensObject },
+  ({ token, tokens }) => ({
     token,
-    description: allTokens[token]?.description,
+    description: tokens[token]?.comment,
   }),
 )

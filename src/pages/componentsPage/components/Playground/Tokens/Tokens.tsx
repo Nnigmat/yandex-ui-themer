@@ -4,7 +4,7 @@ import { cn } from '@bem-react/classname'
 
 import { TokenField } from '../TokenField'
 import { ExpandButton } from '../ExpandButton'
-import { $tokens, TokenType } from '../../../model'
+import { $tokens, TokenType } from '../../../../../model/tokensToShow'
 
 import './Tokens.css'
 

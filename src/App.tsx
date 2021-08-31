@@ -15,7 +15,7 @@ import { Divider } from './lib/lego/Divider'
 import { ComponentsPage } from './pages/componentsPage'
 import { ChangesPage } from './pages/changesPage'
 
-import { variablesInitializationGate } from './model/designTokens'
+import { tokensInitializationGate } from './model/tokens'
 import { viewInitializationGate } from './model/view'
 
 import './App.css'
@@ -31,7 +31,7 @@ const Fade = cssTransition({
 export default () => {
   const [activeTab, setActiveTab] = useState<ActiveTabType>('components')
 
-  useGate(variablesInitializationGate)
+  useGate(tokensInitializationGate)
   useGate(viewInitializationGate)
 
   // useEffect(() => {

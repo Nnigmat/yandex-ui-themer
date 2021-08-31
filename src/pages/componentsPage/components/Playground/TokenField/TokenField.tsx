@@ -2,7 +2,7 @@ import React, { useCallback, FC, useMemo } from 'react'
 
 import { TextinputBase } from '../../../../../components/Textinput'
 import { metricaGoal } from '../../../../../components/YaMetrika'
-import { variablesChange } from '../../../../../model/designTokens'
+import { tokenUpdate } from '../../../../../model/tokens'
 import { tokenChange, TokenType } from '../../../model'
 import { Text, Color, Link } from './Inputs'
 import { TokenPrevious } from './TokenPrevious'
@@ -14,29 +14,25 @@ export const TokenField: FC<TokenProps> = (props) => {
 
   const handleTextChange = useCallback(
     (event) => {
-      variablesChange({
+      tokenUpdate({
         path,
         name,
         value: event.target.value,
-        changed: event.target.value !== defaultValue,
-        type,
       })
       metricaGoal('change-tokens')
     },
-    [defaultValue, path, type, name],
+    [path, name],
   )
 
   const handleColorChange = useCallback(
     (color) => {
-      variablesChange({
+      tokenUpdate({
         path,
         name,
         value: color,
-        changed: color !== defaultValue,
-        type: 'color',
       })
     },
-    [defaultValue, path, name],
+    [name, path],
   )
 
   const handleLink = (token: string) => {
@@ -44,12 +40,11 @@ export const TokenField: FC<TokenProps> = (props) => {
   }
 
   const handleClear = useCallback(() => {
-    variablesChange({
+    tokenUpdate({
       path,
       name,
       value: defaultValue,
-      changed: false,
-      type: 'color',
+      remove: true,
     })
   }, [defaultValue, name, path])
 

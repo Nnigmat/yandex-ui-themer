@@ -2,7 +2,7 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { cn } from '@bem-react/classname'
 
-import { $theme } from '../../model/themes'
+import { $componentTokens } from '../../model/tokens'
 
 import './ComponentsPage.css'
 import { Panels } from './components/Panels'
@@ -14,13 +14,11 @@ import { $component, $tokenPresent, componentChange } from './model'
 const cnComponentsPage = cn('ComponentsPage')
 
 export const ComponentsPage = () => {
-  const {
-    tokens: { components },
-  } = useStore($theme)
+  const { components } = useStore($componentTokens)
   const component = useStore($component)
   const showTokenEditor = useStore($tokenPresent)
 
-  const panels = ['overview', ...Object.keys(components)]
+  const panels = ['overview', ...Object.keys(components || [])]
   const handlePanelSelection = (panel: string) => {
     componentChange(panel)
   }
