@@ -1,7 +1,7 @@
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
 
-import { $tokenGroups } from '../../../../../model/tokensToShow'
+import { $tokenGroups } from '../../model/tokensToShow'
 
 import './Tokens.css'
 import { TokenGroup } from './TokenGroup'

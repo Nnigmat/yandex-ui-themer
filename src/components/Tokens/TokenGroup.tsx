@@ -1,6 +1,6 @@
 import { cn } from '@bem-react/classname'
 import React, { FC, useState } from 'react'
-import { TokenType } from '../../../../../model/tokensToShow'
+import { TokenType } from '../../model/tokensToShow'
 import { ExpandButton } from '../ExpandButton'
 import { TokenField } from '../TokenField'
 

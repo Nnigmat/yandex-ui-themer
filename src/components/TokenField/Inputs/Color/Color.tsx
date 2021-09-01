@@ -4,10 +4,9 @@ import { withDebounceInput } from '@yandex-lego/components/withDebounceInput'
 import { IconButton, Input } from 'react-figma-components'
 import { debounce } from 'lodash'
 
-import { convertColorObj, combineHexAndAlpha } from '../../../../utils/color'
+import { convertColorObj, hexAndAlphaToRgba } from '../../../../utils/color'
 import { ColorPicker } from '../../ColorPicker'
-import { TokenType } from '../../../../../model'
-import { hexAndAlphaToRgba } from '../../../../../../../utils/color'
+import { TokenType } from '../../../../model/tokens';
 
 import './Color.css'
 

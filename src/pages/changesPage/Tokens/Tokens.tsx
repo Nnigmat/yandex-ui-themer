@@ -16,11 +16,9 @@ import { $tokens, TokenType } from '../../../model/tokens';
 import './Tokens.css';
 import { applyAllTokensToFigma } from '../../../utils/figma';
 
-export type TokensProps = {
-    onTokenClick?: (token: Partial<TokenType>) => void;
-};
+export type TokensProps = {};
 
-export const Tokens: FC<TokensProps> = ({ onTokenClick }) => {
+export const Tokens: FC<TokensProps> = () => {
     const [format, setFormat] = useState<'yaml' | 'css'>('yaml');
     const tokensText = useStore($tokensText);
     const cssText = useStore($cssText);
@@ -88,7 +86,7 @@ export const Tokens: FC<TokensProps> = ({ onTokenClick }) => {
                 ) : null}
             </div>
             {!showTokensCode ? (
-                <TokensList onTokenClick={onTokenClick} />
+                <TokensList />
             ) : (
                 <Textarea
                     value={format === 'yaml' ? tokensText : cssText}

@@ -1,19 +1,18 @@
 import { Popup } from '@yandex-lego/components/Popup/desktop/bundle';
+import { useStore } from 'effector-react';
 import React, { useCallback, FC, useMemo, useState, useRef } from 'react';
 
 import { TextinputBase } from '../../components/Textinput';
 import { metricaGoal } from '../../components/YaMetrika';
-import { variablesChange } from '../../model/designTokens';
-import { /*tokenChange,*/ TokenType } from '../../model/tokens';
+import { $currentNodes, setCurrentNodesToken } from '../../model/figma';
+import { tokenUpdate } from '../../model/tokens';
+import { tokenChange, TokenType } from '../../model/tokens';
 import { TokenValue, TokenValueKeys } from '../../TokenTypes';
+import { TokenApply } from '../TokenApply/TokenApply';
 import { Text, Color, Link } from './Inputs';
 import { TokenPrevious } from './TokenPrevious';
-import { TokenApply } from '../TokenApply/TokenApply';
-import { $currentNodes, setCurrentNodesToken } from '../../model/figma';
-import { useStore } from 'effector-react';
 
 export type TokenProps = TokenType & {
-    onClick?: (token: Partial<TokenType>) => void;
     value?: string | number;
 };
 
@@ -26,47 +25,41 @@ export const TokenField: FC<TokenProps> = (props) => {
         defaultValue,
         changed,
         name,
-        onClick,
     } = props;
 
     const handleTextChange = useCallback(
         (event) => {
-            variablesChange({
+            tokenUpdate({
                 path,
                 name,
                 value: event.target.value,
-                changed: event.target.value !== defaultValue,
-                type,
             });
             metricaGoal('change-tokens');
         },
-        [defaultValue, path, type, name]
+        [path, name]
     );
 
     const handleColorChange = useCallback(
         (color) => {
-            variablesChange({
+            tokenUpdate({
                 path,
                 name,
                 value: color,
-                changed: color !== defaultValue,
-                type: 'color',
             });
         },
-        [defaultValue, path, name]
+        [name, path]
     );
 
     const handleLink = (token: string) => {
-        // tokenChange(token)
+        tokenChange(token);
     };
 
     const handleClear = useCallback(() => {
-        variablesChange({
+        tokenUpdate({
             path,
             name,
             value: defaultValue,
-            changed: false,
-            type: 'color',
+            remove: true,
         });
     }, [defaultValue, name, path]);
 
@@ -85,22 +78,11 @@ export const TokenField: FC<TokenProps> = (props) => {
             case 'link':
                 return <Link handleLink={handleLink} {...props} />;
         }
-    }, [props, handleTextChange, handleColorChange]);
-
+        // @ts-expect-error
+    }, [props.type, props.color, props.colorValue, props.value]);
+    
     const [showApplyToken, setShowApplyToken] = useState(false);
     const labelRef = useRef(null);
-
-    const onLabelClickHandler = useCallback(() => {
-        // onClick?.({
-        //     name,
-        //     label,
-        //     description,
-        //     // @ts-expect-error
-        //     value: props.value
-        // });
-        setShowApplyToken((v) => !v);
-    }, []);
-
     const nodes = useStore($currentNodes);
     const { tokens, nodeId } = nodes[0] || {};
 
@@ -123,20 +105,19 @@ export const TokenField: FC<TokenProps> = (props) => {
                 },
                 { ...tokenValues }
             );
-            console.log();
+
             setCurrentNodesToken({ name, value: tokenValue });
         },
         [name, props.value, tokenValues]
     );
+    
+    const onLabelClickHandler = useCallback(() => {
+        setShowApplyToken((v) => !v);
+    }, []);
 
     return (
         <>
-            <TextinputBase
-                labelRef={labelRef}
-                onLabelClick={onLabelClickHandler}
-                label={label}
-                tip={description}
-            >
+            <TextinputBase labelRef={labelRef} label={label} tip={description}>
                 {inner}
             </TextinputBase>
             <Popup
@@ -163,78 +144,3 @@ export const TokenField: FC<TokenProps> = (props) => {
         </>
     );
 };
-
-
-// import React, { useCallback, FC, useMemo } from 'react'
-
-// import { TextinputBase } from '../../../../../components/Textinput'
-// import { metricaGoal } from '../../../../../components/YaMetrika'
-// import { tokenUpdate } from '../../../../../model/tokens'
-// import { tokenChange, TokenType } from '../../../model'
-// import { Text, Color, Link } from './Inputs'
-// import { TokenPrevious } from './TokenPrevious'
-
-// export type TokenProps = TokenType & {}
-
-// export const TokenField: FC<TokenProps> = (props) => {
-//   const { label, description, type, path, defaultValue, changed, name } = props
-
-//   const handleTextChange = useCallback(
-//     (event) => {
-//       tokenUpdate({
-//         path,
-//         name,
-//         value: event.target.value,
-//       })
-//       metricaGoal('change-tokens')
-//     },
-//     [path, name],
-//   )
-
-//   const handleColorChange = useCallback(
-//     (color) => {
-//       tokenUpdate({
-//         path,
-//         name,
-//         value: color,
-//       })
-//     },
-//     [name, path],
-//   )
-
-//   const handleLink = (token: string) => {
-//     tokenChange(token)
-//   }
-
-//   const handleClear = useCallback(() => {
-//     tokenUpdate({
-//       path,
-//       name,
-//       value: defaultValue,
-//       remove: true,
-//     })
-//   }, [defaultValue, name, path])
-
-//   const inner = useMemo(() => {
-//     switch (props.type) {
-//       case 'text':
-//         return <Text handleChange={handleTextChange} {...props} />
-//       case 'color':
-//         return <Color handleLink={handleLink} handleColorChange={handleColorChange} {...props} />
-//       case 'link':
-//         return <Link handleLink={handleLink} {...props} />
-//     }
-//     // @ts-expect-error
-//   }, [props.type, props.color, props.colorValue, props.value])
-
-//   return (
-//     <>
-//       <TextinputBase label={label} tip={description}>
-//         {inner}
-//       </TextinputBase>
-//       {type === 'color' && changed && (
-//         <TokenPrevious color={defaultValue} handleClick={handleClear} />
-//       )}
-//     </>
-//   )
-// }
