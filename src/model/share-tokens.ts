@@ -3,7 +3,7 @@ import copy from 'copy-to-clipboard'
 import { toast } from 'react-toastify'
 
 import { $themeName } from './themes'
-import { $hasChanges, $changesArray } from './tokens'
+import { $hasChanges, $changes, $allTokensObject } from './tokens'
 import { tokensQueryParameterUpdate } from './query'
 import { uploadTokens } from '../api/uploadTokens'
 
@@ -19,12 +19,21 @@ export const tokensShare = createEvent()
 export const shareTokens = attach({
   source: {
     themeName: $themeName,
-    tokens: $changesArray,
+    changes: $changes,
+    allTokens: $allTokensObject,
   },
-  mapParams: (_: any, { themeName, tokens }) => ({
-    themeName,
-    tokens,
-  }),
+  mapParams: (_: any, { themeName, allTokens, changes }) => {
+    const tokens = Object.keys(changes).map((name) => {
+      const { value, path } = allTokens[name]
+
+      return { name, value, path }
+    })
+
+    return {
+      themeName,
+      tokens,
+    }
+  },
   effect: createEffect(({ themeName, tokens }: ShareTokensFxPropsType) => {
     if (tokens.length === 0) {
       return

@@ -1,4 +1,4 @@
-import { ListDesignTokensType, MappingsType } from '../types'
+import { MappingsType } from '../types'
 import { compile, parseYaml } from '@yandex/themekit-core'
 
 import { getType } from '../utils/tokenType'
@@ -21,7 +21,7 @@ export const downloadTheme = async (content: string, mappings: MappingsType) => 
 
   const properties = JSON.parse(res.json[0].content)
 
-  const tokens: ListDesignTokensType = Object.entries(properties).map(([_, item]: any) => ({
+  const tokens = Object.entries(properties).map(([_, item]: any) => ({
     path: item.path,
     name: item.name,
     value: item.value,

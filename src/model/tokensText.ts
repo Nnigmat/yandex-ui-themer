@@ -39,7 +39,7 @@ export const tokensUpdate = createEvent<string>()
 $tokensText.on(tokensUpdate, (_, payload) => payload)
 
 uploadRawTokensFx.doneData.watch((tokens) => {
-  tokenBatchUpdate(tokens)
+  tokenBatchUpdate(tokens.map(({ rawValue, ...rest }) => ({ ...rest, value: rawValue })))
   toast.success('Tokens successfully uploaded')
 })
 

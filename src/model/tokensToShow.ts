@@ -131,5 +131,3 @@ export const $tokenGroups = $tokens.map((tokens) => {
     return groups.find((group) => groupsCount[group] >= 3) || groups[0]
   })
 })
-
-$tokenGroups.watch((tokenGroups) => console.log('groups', tokenGroups))

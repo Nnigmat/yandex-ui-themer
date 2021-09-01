@@ -32,7 +32,7 @@ export const TokenGroup: FC<TokenGroupProps> = ({ name, tokens }) => {
       <h4 className={cnTokens('SectionHeader')}>{name}</h4>
 
       <div>
-        {(opened ? tokens : tokens?.slice(0, AMOUNT_TO_HIDE))?.map((token, tokenIndex) => (
+        {(opened ? tokens : tokens?.slice(0, AMOUNT_TO_HIDE))?.map((token) => (
           <TokenField {...token} key={token.label} label={prettyLabelName(token, name)} />
         ))}
         {!opened && tokens.length > AMOUNT_TO_HIDE && (
