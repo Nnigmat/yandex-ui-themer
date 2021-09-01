@@ -1,5 +1,6 @@
 import { combine } from 'effector'
 import { $allTokensObject, $changes } from './tokens'
+import { rendererSyncThemeMessage } from '../utils/figma';
 
 export const $cssVariables = combine(
   { changes: $changes, tokens: $allTokensObject },
@@ -13,6 +14,10 @@ export const $cssVariables = combine(
     ) as Record<string, string>
   },
 )
+
+$cssVariables.watch(state => {
+    rendererSyncThemeMessage(state);
+});
 
 export const $cssText = $cssVariables.map((variables) => {
   const cssText = Object.keys(variables).reduce(

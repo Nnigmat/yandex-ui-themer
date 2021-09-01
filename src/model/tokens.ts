@@ -10,6 +10,16 @@ import { getType } from '../utils/tokenType'
 import { tokensQueryParameterUpdate } from './query'
 import { componentsList, excludeComponentsList } from './constants'
 
+import groupBy from 'lodash.groupby'
+
+import { $designTokens } from './designTokens'
+import { $invertedTokenMappings } from './mappings'
+import { $resolvedTokens } from './resolvedTokens'
+import { toHEXA } from '../utils/color'
+import { extractParams } from '../utils/extractParams'
+import { transformMappings } from '../utils/transformers'
+import lodashMerge from 'lodash.merge';
+
 import { $theme, themeChange } from './themes'
 
 type Token = {
@@ -72,6 +82,8 @@ export const $globalTokens = $allTokens.map((tokens) => {
 
   return globals
 })
+// Current selected component to be shown
+export const $component = createStore<string>('overview')
 
 export const $componentTokens = $allTokens.map((tokens) => {
   const components: Record<string, Record<string, typeof tokens[0]>> = {}
@@ -95,6 +107,61 @@ export const $componentTokens = $allTokens.map((tokens) => {
 
   return components
 })
+// Tokens of the component
+// export const $tokens = combine(
+//   {
+//     theme: $theme,
+//     mappings: $invertedTokenMappings,
+//     selectedComponent: $component,
+//     resolvedChanges: $resolvedTokens,
+//     changes: $designTokens,
+//   },
+//   ({
+//     theme: {
+//       tokens: { globals, components },
+//     },
+//     changes,
+//     resolvedChanges,
+//     mappings,
+//     selectedComponent,
+//   }) => {
+//     const tokens = selectedComponent === 'overview' ? globals : components[selectedComponent]
+//     const mergedTokens = lodashMerge(tokens, resolvedChanges);
+
+//     return Object.entries(mergedTokens).map<TokenType>(([tokenName, token]) => {
+//       // Initial type of the token
+//       const baseType = getType(String(token.value))
+//       const tokenChanged = typeof resolvedChanges[tokenName]?.value !== 'undefined'
+//       const value = tokenChanged ? resolvedChanges[tokenName].value : String(token.value)
+
+//       // Current type of the token (can become link)
+//       const rawValue = transformMappings((changes[tokenName] || {}).rawValue || '', mappings, true)
+//       const type = getType(rawValue || value)
+//       const changed = value !== token.value
+
+//       let resultToken: any
+//       switch (type) {
+//         case 'text':
+//           resultToken = { value }
+//           break
+//         case 'color':
+//           const [hex, alpha] = toHEXA(value)
+//           resultToken = { hex, alpha, color: value }
+//           break
+//         case 'link':
+//           const params = extractParams(rawValue)
+
+//           // TODO: добавить поддержку для нескольких ссылок
+//           // Пример: padding: {size-l} {size-l}
+//           // Сейчас оно работает только для одной ссылки
+//           if (params) {
+//             resultToken = {
+//               link: params[0].token,
+//               isColor: baseType === 'color',
+//               colorValue: value,
+//             }
+//           }
+//       }
 
 export const $changes = createStore<Record<string, { value: string; path: string[] }>>({})
 
@@ -200,3 +267,24 @@ tokenUpdate.watch(({ name, value }) => observer.update(name, value))
 tokenBatchUpdate.watch((tokens) =>
   tokens.forEach(({ name, value }) => observer.update(name, value)),
 )
+
+export const $tokensGrouped = combine(
+    {
+      tokens: $tokens,
+    },
+    ({
+        tokens,
+    }) => {
+      const groupsCount = tokens.reduce<Record<string, number>>((res, { label, groups }) => {
+        for (const group of groups) {
+          res[group] = res[group] ? res[group] + 1 : 1
+        }
+  
+        return res
+      }, {})
+  
+      return groupBy(tokens, ({ groups }) => {
+          return groups.find(group => groupsCount[group] >= 3) || groups[0];
+      })
+    },
+  )
