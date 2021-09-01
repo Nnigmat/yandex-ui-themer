@@ -35,7 +35,6 @@ function clamp(number: number, min: number, max: number) {
 export function convertColorObj(color: Color): string {
   let colorValue = ''
 
-  // TODO: Move to util.
   if (color.source === 'rgb') {
     colorValue = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`
   } else if (color.source === 'hsl') {
@@ -93,6 +92,23 @@ export function toHEXA(color: string) {
   return [hex.toUpperCase(), `${Math.round(a * 100)}%`]
 }
 
-export function combineHexAndAlpha(hex: string, alpha: string): string {
-  return '#' + hex + clamp(Number(alpha), 0, 100).toString(16).padStart(2, '0')
+// TODO: сейчас данный функция работает только для hex длины 3 и 6
+// Нужно посмотреть, какие подходы используются в других либах и также сделать
+export function hexAndAlphaToRgba(hex: string, alpha: string): string {
+  let rgb
+
+  if (hex.length === 3) {
+    rgb = hex.split('').map((el) => el + el)
+  } else if (hex.length === 6) {
+    rgb = [0, 2, 4].map((el) => hex.slice(el, el + 2))
+  } else {
+    throw new Error(
+      `Invalid HEX. HEX of length 3 or 6 are accepted, but "${hex}" has length ${hex.length}`,
+    )
+  }
+
+  const rgbNumbers = rgb.map((el) => parseInt(el, 16))
+  const mappedAlpha = clamp(Number(alpha), 0, 100) / 100
+
+  return `rgba(${rgbNumbers.join(', ')}, ${mappedAlpha})`
 }

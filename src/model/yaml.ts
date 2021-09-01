@@ -20,7 +20,7 @@ export const $yamlText = combine(
 
     // Make object for yaml from changes
     const yml = Object.values(changes).reduce(
-      (acc, { path, value }) => [...acc, toDeepToken(path, value)],
+      (acc, { path, value }) => [...acc, toDeepToken(path, { value })],
       [] as any,
     )
 
@@ -41,7 +41,6 @@ export const $yamlText = combine(
         }
       })
 
-    console.log(yml)
     const deepmergedYml = deepmerge.all(yml)
     return YAML.stringify(deepmergedYml)
   },

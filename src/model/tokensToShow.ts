@@ -1,10 +1,9 @@
 import { createStore, createEvent, combine } from 'effector'
 
 import groupBy from 'lodash.groupby'
+import { $component } from '../pages/componentsPage/model'
 
 import { toHEXA } from '../utils/color'
-import { extractParams } from '../utils/extractParams'
-import { getType } from '../utils/tokenType'
 import { $componentTokens, $globalTokens } from './tokens'
 
 export type TokenBase = {
@@ -64,13 +63,6 @@ interface ComponentState {
   currentProps: Record<string, unknown>
 }
 
-// Current selected component to be shown
-export const $component = createStore<string>('overview')
-export const $componentProps = createStore<ComponentState>({
-  allProps: {},
-  currentProps: {},
-})
-
 // Current selected token to be edited
 export const $token = createStore<string>('')
 export const $tokenPresent = $token.map((token) => token.length > 0)
@@ -89,41 +81,29 @@ export const $tokens = combine(
     selectedComponent: $component,
   },
   ({ globals, components, selectedComponent }) => {
-    console.log(globals)
     const tokens = selectedComponent === 'overview' ? globals : components[selectedComponent]
 
-    const preparedTokens = Object.entries(tokens).map<TokenType>(([tokenName, token]) => {
+    return Object.entries(tokens).map<TokenType>(([tokenName, token]) => {
       // Current type of the token (can become link)
       const {
         original: { value: rawValue },
         type: baseType,
-        changed,
+        refs,
         value,
       } = token
-      const type = getType(rawValue)
-
       let resultToken: any
-      switch (type) {
-        case 'text':
-          resultToken = { value }
-          break
-        case 'color':
-          const [hex, alpha] = toHEXA(value)
-          resultToken = { hex, alpha, color: value }
-          break
-        case 'link':
-          const params = extractParams(rawValue)
-
-          // TODO: добавить поддержку для нескольких ссылок
-          // Пример: padding: {size-l} {size-l}
-          // Сейчас оно работает только для одной ссылки
-          if (params) {
-            resultToken = {
-              link: params[0].token,
-              isColor: baseType === 'color',
-              colorValue: value,
-            }
-          }
+      if (refs.length > 0) {
+        resultToken = {
+          link: refs[0].name,
+          isColor: baseType === 'color',
+          colorValue: value,
+          type: 'link',
+        }
+      } else if (baseType === 'color') {
+        const [hex, alpha] = toHEXA(value)
+        resultToken = { hex, alpha, color: value, type: 'color' }
+      } else {
+        resultToken = { value, type: 'text' }
       }
 
       return {
@@ -132,23 +112,24 @@ export const $tokens = combine(
         name: tokenName,
         label: tokenName,
         groups: getTokenGroups(tokenName),
-        type,
-        defaultValue: token.value,
         rawValue,
-        changed,
       }
-    })
-
-    const groupsCount = preparedTokens.reduce<Record<string, number>>((res, { label, groups }) => {
-      for (const group of groups) {
-        res[group] = res[group] ? res[group] + 1 : 1
-      }
-
-      return res
-    }, {})
-
-    return groupBy(preparedTokens, ({ groups }) => {
-      return groups.find((group) => groupsCount[group] >= 3) || groups[0]
     })
   },
 )
+
+export const $tokenGroups = $tokens.map((tokens) => {
+  const groupsCount = tokens.reduce<Record<string, number>>((res, { groups }) => {
+    for (const group of groups) {
+      res[group] = res[group] ? res[group] + 1 : 1
+    }
+
+    return res
+  }, {})
+
+  return groupBy(tokens, ({ groups }) => {
+    return groups.find((group) => groupsCount[group] >= 3) || groups[0]
+  })
+})
+
+$tokenGroups.watch((tokenGroups) => console.log('groups', tokenGroups))

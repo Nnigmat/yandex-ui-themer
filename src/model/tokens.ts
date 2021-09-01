@@ -23,7 +23,7 @@ type Token = {
   }
 }
 
-const tokensPass = createEvent()
+const tokensPass = createEvent<Array<Token>>()
 
 export const tokensInitialization = createEvent()
 export const tokenUpdate = createEvent<{
@@ -39,45 +39,17 @@ export const tokensReset = createEvent()
 
 export const tokensChangedSinceLastViewReset = createEvent()
 
-const $observer = $theme.map((theme) => {
-  const observer = new ThemekitObserver({
-    tokens: theme.tokens,
-    output: {
-      json: {
-        transforms: ['name/param-case', 'value/color-function'],
-        files: [
-          {
-            destination: 'root.json',
-            format: 'json/flat',
-          },
-        ],
-      },
-    },
-  })
-
-  observer.watch((result) => {
-    tokensPass(JSON.parse(result.json[0].content))
-    console.log(JSON.parse(result.json[0].content))
-  })
-
-  tokenUpdate.watch(({ name, value }) => observer.update(name, value))
-  tokenBatchUpdate.watch((tokens) =>
-    tokens.forEach(({ name, value }) => observer.update(name, value)),
-  )
-
-  return observer
-})
-
 export const $rawTokens = createStore<Array<Token>>([])
 
 export const $allTokens = combine(
   { theme: $theme, tokens: $rawTokens },
   ({ theme: { defaultValues }, tokens }) =>
-    tokens.map((token) => ({
+    tokens.map(({ comment, ...token }) => ({
       ...token,
       defaultValue: defaultValues[token.name],
       changed: defaultValues[token.name] !== token.value,
       type: getType(token.value),
+      description: comment,
     })),
 )
 
@@ -85,17 +57,21 @@ export const $allTokensObject = $allTokens.map<Record<string, Token>>((tokens) =
   tokens.reduce((acc, token) => ({ ...acc, [token.name]: token }), {}),
 )
 
-export const $globalTokens = $allTokens.map((tokens) =>
-  tokens.filter((token) => {
+export const $globalTokens = $allTokens.map((tokens) => {
+  const globals: Record<string, typeof tokens[0]> = {}
+
+  tokens.forEach((token) => {
     const path = token.path[0]
 
     if (excludeComponentsList.includes(path) || componentsList.includes(path)) {
-      return false
+      return
     }
 
-    return true
-  }),
-)
+    globals[token.name] = token
+  })
+
+  return globals
+})
 
 export const $componentTokens = $allTokens.map((tokens) => {
   const components: Record<string, Record<string, typeof tokens[0]>> = {}
@@ -199,5 +175,28 @@ $tokensChangedSinceLastView
   .on(tokenBatchUpdate, () => true)
   .reset(tokensChangedSinceLastViewReset)
 
-$globalTokens.watch(console.log)
-$componentTokens.watch(console.log)
+$rawTokens.on(tokensPass, (_, tokens) => tokens)
+
+let observer = new ThemekitObserver({
+  tokens: $theme.getState().tokens,
+  output: {
+    json: {
+      transforms: ['name/param-case', 'value/color-function'],
+      files: [
+        {
+          destination: 'root.json',
+          format: 'json/flat',
+        },
+      ],
+    },
+  },
+})
+
+observer.watch((result) => {
+  tokensPass(JSON.parse(result.json[0].content))
+})
+
+tokenUpdate.watch(({ name, value }) => observer.update(name, value))
+tokenBatchUpdate.watch((tokens) =>
+  tokens.forEach(({ name, value }) => observer.update(name, value)),
+)

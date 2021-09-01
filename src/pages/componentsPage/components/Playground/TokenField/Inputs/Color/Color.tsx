@@ -7,7 +7,7 @@ import { debounce } from 'lodash'
 import { convertColorObj } from '../../../../../../../utils/color'
 import { ColorPicker } from '../../ColorPicker'
 import { TokenType } from '../../../../../model'
-import { combineHexAndAlpha } from '../../../../../../../utils/color'
+import { hexAndAlphaToRgba } from '../../../../../../../utils/color'
 
 import './Color.css'
 
@@ -49,8 +49,10 @@ export const Color: FC<ColorProps> = ({
 
   const handleInputChange = useCallback(
     (hex: string, alpha: string) => {
-      const color = combineHexAndAlpha(hex, alpha.replace('%', ''))
-      handleColorChange(color)
+      try {
+        const color = hexAndAlphaToRgba(hex, alpha.replace('%', ''))
+        handleColorChange(color)
+      } catch (e) {}
     },
     [handleColorChange],
   )
