@@ -5,6 +5,7 @@ import {
     createEvent,
     createStore,
     forward,
+    Store,
 } from 'effector';
 import { createGate } from 'effector-react';
 import { toast } from 'react-toastify';
@@ -64,9 +65,16 @@ export const $allTokens = combine(
         }))
 );
 
-export const $allTokensObject = $allTokens.map<Record<string, Token>>(
-    (tokens) =>
-        tokens.reduce((acc, token) => ({ ...acc, [token.name]: token }), {})
+type GetInsideStore<X> = X extends Store<infer I> ? I : never;
+
+type ArrayElement<
+    ArrayType extends readonly unknown[]
+> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+export const $allTokensObject = $allTokens.map<
+    Record<string, ArrayElement<GetInsideStore<typeof $allTokens>>>
+>((tokens) =>
+    tokens.reduce((acc, token) => ({ ...acc, [token.name]: token }), {})
 );
 
 export const $globalTokens = $allTokens.map((tokens) => {

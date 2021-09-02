@@ -8,8 +8,24 @@ export const closeEditor = tokenReset;
 
 export const $selectedToken = combine(
     { token: $token, tokens: $allTokensObject },
-    ({ token, tokens }) => ({
-        token,
-        description: tokens[token]?.comment,
-    })
+    ({ token, tokens }) => {
+        const {
+            description = '',
+            refs = [],
+            type = 'text',
+            name = '',
+            original: { value: rawValue = '' },
+        } = tokens[token] || { original: { value: '' } };
+
+        return {
+            token,
+            description,
+            inherit: refs.length > 0,
+            type,
+            rawValue,
+            name,
+        };
+    }
 );
+
+$selectedToken.watch(console.log);

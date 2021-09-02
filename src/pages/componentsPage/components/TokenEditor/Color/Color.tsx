@@ -7,31 +7,28 @@ import React, {
 } from 'react';
 import { cnTextinput } from '@yandex-lego/components/Textinput/Textinput';
 import { withDebounceInput } from '@yandex-lego/components/withDebounceInput';
-import { IconButton, Input } from 'react-figma-components';
+import { Input } from 'react-figma-components';
 import { debounce } from 'lodash';
 
-import { convertColorObj, hexAndAlphaToRgba } from '../../../../utils/color';
-import { ColorPicker } from '../../../ColorPicker';
-import { TokenType } from '../../../../model/tokens';
+import { convertColorObj, hexAndAlphaToRgba } from '../../../../../utils/color';
+import { ColorPicker } from '../../../../../components/ColorPicker';
 
 import './Color.css';
 
-export type ColorProps = TokenType & {
-    handleLink: (token: string) => void;
+export type ColorProps = {
     handleColorChange: (color: string) => void;
-    type: 'color';
-    name: string;
+    color: string;
+    hex: string;
+    alpha: string;
 };
 
 const DebounceInput = withDebounceInput(Input);
 
 export const Color: FC<ColorProps> = ({
-    handleLink,
     handleColorChange,
     color,
     hex,
     alpha,
-    name,
 }) => {
     const [_hex, setHex] = useState(hex);
     const [_alpha, setAlpha] = useState(alpha);
@@ -74,10 +71,6 @@ export const Color: FC<ColorProps> = ({
         [handleColorChangeDebounced]
     );
 
-    const handleLinkHandler = useCallback(() => handleLink(name), [
-        name,
-        handleLink,
-    ]);
     const hexChangeHandler = useCallback(
         (event) => handleInputChange(event.target.value, _alpha),
         [_alpha, handleInputChange]
@@ -115,11 +108,6 @@ export const Color: FC<ColorProps> = ({
                     onChange={alphaChangeHandler}
                     maxLength={4}
                     onFocus={selectTextOnFocus}
-                />
-                <IconButton
-                    name="hyperlink"
-                    onPress={handleLinkHandler}
-                    className="Textinput-BreakIcon"
                 />
             </div>
         </>
