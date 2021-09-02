@@ -1,7 +1,12 @@
 import React, { FC, useCallback } from 'react';
 
 import { Textinput } from '../../../../components/Textinput';
-import { $componentProps, Prop, currentPropsChange, currentCombinedPropsChange } from '../../model';
+import {
+    $componentProps,
+    Prop,
+    currentPropsChange,
+    currentCombinedPropsChange,
+} from '../../../../model/tokens';
 
 import { useStore } from 'effector-react';
 
@@ -16,14 +21,23 @@ export type SettingsItemProps = {
 };
 
 export const Settings: FC<SettingsProps> = ({ combine }) => {
-    const { allProps, currentProps, currentCombinedProps } = useStore($componentProps);
-    const onChangeProp = useCallback((value: unknown, name) => {
-        const handler = combine ? currentCombinedPropsChange : currentPropsChange;
+    const { allProps, currentProps, currentCombinedProps } = useStore(
+        $componentProps
+    );
+    const onChangeProp = useCallback(
+        (value: unknown, name) => {
+            const handler = combine
+                ? currentCombinedPropsChange
+                : currentPropsChange;
 
-        handler({ name, value });
-    }, [combine]);
+            handler({ name, value });
+        },
+        [combine]
+    );
 
-    const props = combine ? { ...currentProps, ...currentCombinedProps } : currentProps;
+    const props = combine
+        ? { ...currentProps, ...currentCombinedProps }
+        : currentProps;
 
     return (
         <>
