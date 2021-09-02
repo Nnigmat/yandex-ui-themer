@@ -92,6 +92,7 @@ export const Color: FC<ColorProps> = ({
                     color={_color}
                     onChange={_handleColorChange}
                     className="Textinput-Picker"
+                    shape="square"
                 />
                 <DebounceInput
                     className="Textinput-Hex"

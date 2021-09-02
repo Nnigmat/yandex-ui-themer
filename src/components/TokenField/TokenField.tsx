@@ -30,7 +30,6 @@ export const TokenField: FC<TokenProps> = (props) => {
     const handleTextChange = useCallback(
         (event) => {
             tokenUpdate({
-                path,
                 name,
                 value: event.target.value,
             });
@@ -42,7 +41,6 @@ export const TokenField: FC<TokenProps> = (props) => {
     const handleColorChange = useCallback(
         (color) => {
             tokenUpdate({
-                path,
                 name,
                 value: color,
             });
@@ -56,7 +54,6 @@ export const TokenField: FC<TokenProps> = (props) => {
 
     const handleClear = useCallback(() => {
         tokenUpdate({
-            path,
             name,
             value: defaultValue,
             remove: true,
@@ -80,7 +77,7 @@ export const TokenField: FC<TokenProps> = (props) => {
         }
         // @ts-expect-error
     }, [props.type, props.color, props.colorValue, props.value]);
-    
+
     const [showApplyToken, setShowApplyToken] = useState(false);
     const labelRef = useRef(null);
     const nodes = useStore($currentNodes);
@@ -110,7 +107,7 @@ export const TokenField: FC<TokenProps> = (props) => {
         },
         [name, props.value, tokenValues]
     );
-    
+
     const onLabelClickHandler = useCallback(() => {
         setShowApplyToken((v) => !v);
     }, []);

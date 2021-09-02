@@ -1,6 +1,6 @@
-import { RefObject } from 'react'
+import { RefObject } from 'react';
 
 export type IconProps = {
-  className: string
-  ref?: RefObject<SVGSVGElement>
-}
+    className?: string;
+    ref?: RefObject<SVGSVGElement>;
+};

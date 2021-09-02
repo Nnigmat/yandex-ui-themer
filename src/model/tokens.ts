@@ -41,11 +41,10 @@ export const tokensInitialization = createEvent();
 export const tokenUpdate = createEvent<{
     name: string;
     value: string;
-    path: string[];
     remove?: boolean;
 }>();
 export const tokenBatchUpdate = createEvent<
-    { name: string; value: string; path: string[]; remove?: boolean }[]
+    { name: string; value: string; remove?: boolean }[]
 >();
 export const tokensReset = createEvent();
 
@@ -123,61 +122,6 @@ export const $componentTokens = $allTokens.map((tokens) => {
 
     return components;
 });
-// Tokens of the component
-// export const $tokens = combine(
-//   {
-//     theme: $theme,
-//     mappings: $invertedTokenMappings,
-//     selectedComponent: $component,
-//     resolvedChanges: $resolvedTokens,
-//     changes: $designTokens,
-//   },
-//   ({
-//     theme: {
-//       tokens: { globals, components },
-//     },
-//     changes,
-//     resolvedChanges,
-//     mappings,
-//     selectedComponent,
-//   }) => {
-//     const tokens = selectedComponent === 'overview' ? globals : components[selectedComponent]
-//     const mergedTokens = lodashMerge(tokens, resolvedChanges);
-
-//     return Object.entries(mergedTokens).map<TokenType>(([tokenName, token]) => {
-//       // Initial type of the token
-//       const baseType = getType(String(token.value))
-//       const tokenChanged = typeof resolvedChanges[tokenName]?.value !== 'undefined'
-//       const value = tokenChanged ? resolvedChanges[tokenName].value : String(token.value)
-
-//       // Current type of the token (can become link)
-//       const rawValue = transformMappings((changes[tokenName] || {}).rawValue || '', mappings, true)
-//       const type = getType(rawValue || value)
-//       const changed = value !== token.value
-
-//       let resultToken: any
-//       switch (type) {
-//         case 'text':
-//           resultToken = { value }
-//           break
-//         case 'color':
-//           const [hex, alpha] = toHEXA(value)
-//           resultToken = { hex, alpha, color: value }
-//           break
-//         case 'link':
-//           const params = extractParams(rawValue)
-
-//           // TODO: добавить поддержку для нескольких ссылок
-//           // Пример: padding: {size-l} {size-l}
-//           // Сейчас оно работает только для одной ссылки
-//           if (params) {
-//             resultToken = {
-//               link: params[0].token,
-//               isColor: baseType === 'color',
-//               colorValue: value,
-//             }
-//           }
-//       }
 
 export const $changes = createStore<Record<string, { value: string }>>({});
 

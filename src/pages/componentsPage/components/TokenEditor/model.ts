@@ -15,6 +15,7 @@ export const $selectedToken = combine(
             type = 'text',
             name = '',
             original: { value: rawValue = '' },
+            value = '',
         } = tokens[token] || { original: { value: '' } };
 
         return {
@@ -24,6 +25,7 @@ export const $selectedToken = combine(
             type,
             rawValue,
             name,
+            value,
         };
     }
 );
