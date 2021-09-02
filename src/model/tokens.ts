@@ -179,9 +179,7 @@ export const $componentTokens = $allTokens.map((tokens) => {
 //           }
 //       }
 
-export const $changes = createStore<
-    Record<string, { value: string; path: string[] }>
->({});
+export const $changes = createStore<Record<string, { value: string }>>({});
 
 export const $hasChanges = $changes.map(
     (tokens) => Object.keys(tokens).length !== 0
@@ -222,7 +220,7 @@ export const initializeTokens = createEffect(async () => {
 });
 
 $changes
-    .on(tokenUpdate, (state, { name, value, path, remove }) => {
+    .on(tokenUpdate, (state, { name, value, remove }) => {
         if (remove) {
             const newState = { ...state };
             delete newState[name];
@@ -230,16 +228,16 @@ $changes
             return newState;
         }
 
-        return { ...state, [name]: { value, path } };
+        return { ...state, [name]: { value } };
     })
     .on(tokenBatchUpdate, (state, tokens) => {
         const result = { ...state };
 
-        tokens.forEach(({ name, value, path, remove }) => {
+        tokens.forEach(({ name, value, remove }) => {
             if (remove) {
                 delete result[name];
             } else {
-                result[name] = { value, path };
+                result[name] = { value };
             }
         });
 
