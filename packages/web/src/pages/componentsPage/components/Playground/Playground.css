@@ -1,0 +1,92 @@
+.Playground {
+  display: flex;
+  flex-direction: column;
+}
+
+.Playground-Header {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+	flex-shrink: 0;
+}
+
+.Playground-Body {
+  padding: 8px 16px 26px 18px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex: 1 1 100px;
+}
+
+/* .Playground-Footer */
+
+.Playground-Footer {
+  display: flex;
+  align-items: top;
+  flex-direction: column;
+  padding: 10px;
+  padding-left: 24px;
+  height: 48px;
+
+  font-size: 11px;
+  line-height: 16px;
+  transition: height 0.2s ease;
+}
+
+.Playground-Footer .switch {
+  /* switch занимает height: 100% по дефолту */
+  height: 16px;
+}
+
+.Playground-Footer-Text > p {
+  margin: 0;
+  margin-bottom: 8px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.Playground-Footer-Text > p:last-child {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.Playground-Footer .Playground-Footer-Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.3);
+
+  font-family: Inter;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.005em;
+  text-align: left;
+}
+
+.Playground-Footer.Playground-Footer_active {
+  height: 140px;
+}
+
+.Playground-Footer.Playground-Footer_active .Playground-Footer-Header {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.Playground-Footer .Playground-Footer-Buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Playground-Footer_active .Playground-Footer-Header,
+.Playground-Footer_active .Playground-Footer-Header-Title {
+  cursor: default;
+}
+
+.Playground-Footer .Playground-Footer-Header-Button .icon {
+  cursor: pointer;
+}
+
+.Playground-Footer .Playground-Footer-Header-Button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}

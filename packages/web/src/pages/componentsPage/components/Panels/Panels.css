@@ -1,0 +1,49 @@
+.Panels {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    background: #fff;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: 0.1s transform ease-in-out;
+}
+
+.Panels-Wrapper {
+    width: 20px;
+}
+
+.Panels-Wrapper:hover .Panels, .Panels:hover {
+    transform: translateX(0);
+}
+
+.Panels .Panels-Content {
+	height: calc(100% - 42px);
+    overflow-y: scroll;
+}
+
+.Panels .Panels-Input .input-field {
+	height: 40px;
+}
+
+.Panels .Panels-Input .icon {
+	top: 4px;
+}
+
+.Panels .Panels-Input .input-field {
+	border: none;
+}
+
+.Panels .Panels-Content .disclosure-label {
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 16px;
+	letter-spacing: 0.005em;
+
+	text-transform: capitalize;
+}
+
+.Panels .Panels-Disclosure .disclosure-content {
+	padding: 0;
+	pointer-events: all;
+}

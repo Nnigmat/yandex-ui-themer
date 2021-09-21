@@ -1,0 +1,44 @@
+.Textinput.Textinput_type_link {
+  font-size: 11px;
+  line-height: 16px;
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.005em;
+
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.Textinput.Textinput_type_link .Textinput-BreakIcon {
+  visibility: hidden;
+  margin-left: auto;
+}
+
+.Textinput.Textinput_type_link:hover .Textinput-BreakIcon {
+  visibility: visible;
+}
+
+.Textinput.Textinput_type_link .icon-button .icon {
+  cursor: pointer;
+}
+
+.Textinput.Textinput_type_link:hover {
+  background: #f0f0f0;
+}
+
+.Textinput.Textinput_type_link .Textinput-Picker {
+  padding: 6px;
+}
+
+.Textinput-LinkWrapper {
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    position: relative;
+    flex-shrink: 1;
+    flex-grow: 1;
+    width: 100px;
+}
+.Textinput-Link {
+    white-space: nowrap;
+}

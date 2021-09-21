@@ -1,0 +1,4 @@
+{
+  "extends": "@yandex-lego/components/Theme/themes/default.theme.json",
+  "sources": []
+}

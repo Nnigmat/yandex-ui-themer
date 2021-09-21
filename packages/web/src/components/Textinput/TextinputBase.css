@@ -1,0 +1,38 @@
+.Textinput.Textinput {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.Textinput .Textinput-Label {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 16px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 80px;
+  width: 90px;
+
+  margin: 0 12px 0 18px;
+}
+
+.Textinput .Textinput-Tip {
+  display: flex;
+  align-items: center;
+}
+
+.Textinput .Textinput-Body {
+  flex-basis: 60%;
+}
+
+.Textinput.Textinput_has_tip .Textinput-Label {
+  margin-left: 0px;
+}
+
+.Textinput .Textinput-TipIcon {
+  margin-right: 6px;
+  cursor: pointer;
+}
