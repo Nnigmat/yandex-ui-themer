@@ -3,8 +3,8 @@ import {
     FigmaMessageType,
     FigmaMessages,
     FigmaPluginMessages,
-} from '../../../src/FigmaMessageType';
-import { Token, TokenValue, TokenValueKeys } from '../../../src/TokenTypes';
+} from '../../web/src/FigmaMessageType';
+import { Token, TokenValue, TokenValueKeys } from '../../web/src/TokenTypes';
 import { updateNode } from './helpers/updateNode';
 import { setTokenToNode } from './setTokenToNode';
 

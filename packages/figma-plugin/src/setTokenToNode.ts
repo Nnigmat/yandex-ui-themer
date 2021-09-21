@@ -6,7 +6,7 @@ import convertOpacityToFigma, {
 } from './helpers/transformValue';
 import { convertToFigmaColor } from './helpers/colors';
 import { convertStringToFigmaGradient } from './helpers/gradients';
-import { Token } from '../../../src/TokenTypes';
+import { Token } from '../../web/src/TokenTypes';
 
 export async function setFont(target: TextNode, token: Token) {
     try {
@@ -235,8 +235,10 @@ export const setSize = (node: SceneNode, token: Token) => {
     // SIZING: BOTH
     if (
         typeof token.value.sizing !== 'undefined' &&
+        // @ts-expect-error
         typeof node.resize !== 'undefined'
     ) {
+        // @ts-expect-error
         node.resize(
             transformSize(token.value.sizing),
             transformSize(token.value.sizing)
@@ -246,16 +248,20 @@ export const setSize = (node: SceneNode, token: Token) => {
     // SIZING: WIDTH
     if (
         typeof token.value.width !== 'undefined' &&
+        // @ts-expect-error
         typeof node.resize !== 'undefined'
     ) {
+        // @ts-expect-error
         node.resize(transformSize(token.value.width), node.height);
     }
 
     // SIZING: HEIGHT
     if (
         typeof token.value.height !== 'undefined' &&
+        // @ts-expect-error
         typeof node.resize !== 'undefined'
     ) {
+        // @ts-expect-error
         node.resize(node.width, transformSize(token.value.height));
     }
 };

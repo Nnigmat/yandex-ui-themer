@@ -5,11 +5,11 @@ const path = require('path');
 module.exports = (env, argv) => {
     const outputDir = path.join(
         __dirname,
-        argv.mode === 'production' ? '../plugin-static' : 'dist'
+        'dist'
     );
     const publicPath =
         argv.mode === 'production'
-            ? 'themer-url/'
+            ? 'https://bem.github.io/yandex-ui-themer/?figma=true'
             : '/';
 
     const frameUrl =
